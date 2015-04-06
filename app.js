@@ -36,10 +36,7 @@ app.post('/articles', function(req, res) {
    var title = req.body.article.title;
    var author = req.body.article.author;
    var content = req.body.article.content;
-   db.Article.create({
-       title: title,
-       author: author,
-       content: content
+   db.Article.create({title: title,author: author,content:content
    }).then(function(article) {
        res.redirect("/articles");
    });
@@ -47,11 +44,23 @@ app.post('/articles', function(req, res) {
 
 //to find an article by ID
 app.get('/articles/:id', function(req, res) {
-  res.render(req.body);
-  
-})
+	var articlesId = req.params.id;
+  	db.Article.find(articlesId)
+              .then(function(article) {
+                res.render('article', {article: article});
+              });
+});
 
-//displays homepage at localhost3000
+
+
+// app.delete('/articles/:id', function(req, res) {
+// 		var id = req.params.id;
+// 		articles.splice(id - 1, 1);
+
+// 	res.redirect('/articles');
+// });
+
+
 app.get('/', function(req,res) {
   res.render('site/index.ejs');
 });
