@@ -2,12 +2,16 @@
 <!DOCTYPE HTML>
 <html>
 <body>
-<h1>Articles index</h1>
+<h1>Articles Index</h1>
+<h4>Please see below for our full list of non-sensical articles</h4>
 <% articlesList.forEach(function(article) { %>
 <div>
   <a href="/articles/<%= article.id %>"><%= article.title %></a>
   <div>
-    <%= article.content %>
+    <%= article.author %>
+    <div>
+    	<%= article.content %>
+    </div>
   </div>
 </div>
 <% }) %>

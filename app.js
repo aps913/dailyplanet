@@ -16,7 +16,7 @@ var db = require("./models");
 app.get('/articles', function(req, res) {
     db.Article.findAll().then(function(articles) {
         res.render('articles/index', { articlesList: articles });
-   })  // added paren here
+   })  
 }); 
 
 //displays form to submit articles
@@ -24,16 +24,26 @@ app.get('/articles/new', function(req,res) {
   res.render('articles/new');
 });
 
-//user should not see this page, just used for internal routing
-app.post('/articles', function(req,res) {
-  db.Article.create({title req.body.article.title, author: req.body.article.author}).then(function (article) {
-	res.redirect("/articles");
-	});
-  //console.log(req.body);
-});
+// //user should not see this page, just used for internal routing
+// app.post('/articles', function(req,res) {
+//   db.Article.create({title: req.body.article.title, author: req.body.article.author, content: req.body.content}).then(function (article) {
+// 	res.redirect("/articles");
+// 	});
+//   //console.log(req.body);
+// });
 
-
-
+app.post('/articles', function(req, res) {
+   var title = req.body.article.title;
+   var author = req.body.article.author;
+   var content = req.body.article.content;
+   db.Article.create({
+       title: title,
+       author: author,
+       content: content
+   }).then(function(article) {
+       res.redirect("/articles");
+   });
+}); 
 
 //to find an article by ID
 app.get('/articles/:id', function(req, res) {
